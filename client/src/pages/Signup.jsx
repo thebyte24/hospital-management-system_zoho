@@ -81,7 +81,7 @@ function Signup() {
     <div className="auth-container">
       <div className="auth-card">
         <h1 className="auth-title">Hospital Queue Management</h1>
-        <h2 className="auth-subtitle">Patient Signup</h2>
+        <h2 className="auth-subtitle">Patient Registration</h2>
         
         {error && <div className="error-message">{error}</div>}
         
