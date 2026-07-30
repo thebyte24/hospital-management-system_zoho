@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PatientDashboard from './pages/PatientDashboardMock';
 import DoctorDashboard from './pages/DoctorDashboardMock';
-import AdminDashboard from './pages/AdminDashboardMock';
+import AdminDashboard from './pages/AdminDashboardNew';
 
 // Components
 import PrivateRoute from './components/PrivateRoute';
