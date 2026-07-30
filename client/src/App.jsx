@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 // Pages
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import PatientDashboard from './pages/PatientDashboard';
-import DoctorDashboard from './pages/DoctorDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import PatientDashboard from './pages/PatientDashboardMock';
+import DoctorDashboard from './pages/DoctorDashboardMock';
+import AdminDashboard from './pages/AdminDashboardMock';
 
 // Components
 import PrivateRoute from './components/PrivateRoute';

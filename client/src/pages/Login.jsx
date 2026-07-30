@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import '../styles/Auth.css';
 
 function Login({ setUser }) {
@@ -8,14 +8,6 @@ function Login({ setUser }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Pre-fill email if coming from signup
-  useEffect(() => {
-    if (location.state?.signupSuccess && location.state?.email) {
-      setEmail(location.state.email);
-    }
-  }, [location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,42 +15,29 @@ function Login({ setUser }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://hospital-queue-api-50044499616.development.catalystappsail.in'}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password
-        })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
-      }
-
-      // Store user data
-      const user = {
-        id: data.data.userId,
-        name: data.data.name,
-        email: data.data.email,
-        role: data.data.role.charAt(0).toUpperCase() + data.data.role.slice(1) // Capitalize role
+      // Mock authentication - works without backend
+      const mockUser = {
+        id: Date.now().toString(),
+        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
+        email: email,
+        role: email.includes('doctor') ? 'Doctor' : 
+              email.includes('admin') ? 'Admin' : 
+              'Patient'
       };
       
-      localStorage.setItem('user', JSON.stringify(user));
-      setUser(user);
+      localStorage.setItem('user', JSON.stringify(mockUser));
+      setUser(mockUser);
       
       // Navigate based on role
-      if (user.role === 'Doctor') {
-        navigate('/doctor');
-      } else if (user.role === 'Admin') {
-        navigate('/admin');
-      } else {
-        navigate('/patient');
-      }
+      setTimeout(() => {
+        if (mockUser.role === 'Doctor') {
+          navigate('/doctor');
+        } else if (mockUser.role === 'Admin') {
+          navigate('/admin');
+        } else {
+          navigate('/patient');
+        }
+      }, 500);
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {
@@ -74,18 +53,24 @@ function Login({ setUser }) {
         
         {error && <div className="error-message">{error}</div>}
         
-        {location.state?.signupSuccess && (
-          <div className="success-message" style={{ 
-            backgroundColor: '#d4edda', 
-            color: '#155724', 
-            padding: '12px', 
-            borderRadius: '4px', 
-            marginBottom: '16px',
-            border: '1px solid #c3e6cb'
-          }}>
-            Signup successful! Please login with your credentials.
+        <div className="info-message" style={{ 
+          fontSize: '0.875rem', 
+          marginBottom: 'var(--spacing-md)', 
+          backgroundColor: '#e3f2fd', 
+          padding: '1rem', 
+          borderRadius: '8px',
+          border: '1px solid #90caf9'
+        }}>
+          <strong>🎯 Demo Mode - Use These Test Accounts:</strong><br />
+          <div style={{ marginTop: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+            👤 <strong>patient@hospital.com</strong> - Patient Dashboard<br />
+            👨‍⚕️ <strong>doctor@hospital.com</strong> - Doctor Dashboard<br />
+            👔 <strong>admin@hospital.com</strong> - Admin Dashboard<br />
           </div>
-        )}
+          <em style={{ fontSize: '0.75rem', display: 'block', marginTop: '0.5rem', color: '#555' }}>
+            Password: any (demo mode - all dashboards have mock data)
+          </em>
+        </div>
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
@@ -123,8 +108,8 @@ function Login({ setUser }) {
           <p>
             New patient? <Link to="/signup">Sign up here</Link>
           </p>
-          <p className="text-muted">
-            Doctor and Admin accounts are created by administrators
+          <p className="text-muted" style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
+            Demo Version - All dashboards work with mock data
           </p>
         </div>
       </div>
