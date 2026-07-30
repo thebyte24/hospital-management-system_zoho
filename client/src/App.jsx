@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 // Pages
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import PatientDashboard from './pages/PatientDashboardMock';
-import DoctorDashboard from './pages/DoctorDashboardMock';
+import PatientDashboard from './pages/PatientDashboardNew';
+import DoctorDashboard from './pages/DoctorDashboardNew';
 import AdminDashboard from './pages/AdminDashboardNew';
 
 // Components
