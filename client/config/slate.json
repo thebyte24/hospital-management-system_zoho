@@ -1,0 +1,9 @@
+{
+  "name": "hospital-queue-frontend",
+  "description": "Hospital Queue Management System - Frontend",
+  "build": {
+    "install": "npm install",
+    "build": "npm run build",
+    "output": "dist"
+  }
+}

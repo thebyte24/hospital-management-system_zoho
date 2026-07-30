@@ -1,0 +1,14 @@
+{
+  "service_name": "hospital-queue-api",
+  "service_description": "Hospital Queue Management System - Backend API",
+  "stack": {
+    "node_version": "18"
+  },
+  "build": {
+    "install": "npm install",
+    "build": "echo 'No build step needed'"
+  },
+  "launch": {
+    "start": "node index.js"
+  }
+}

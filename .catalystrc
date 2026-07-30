@@ -1,0 +1,36 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "actives": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "61734000000016001",
+      "name": "Racer",
+      "domain": {
+        "id": "50044499616",
+        "name": "racer-60080743887.development"
+      },
+      "timezone": "Asia/Kolkata",
+      "env": [
+        {
+          "idx": 1,
+          "id": "60080743887",
+          "name": "Development",
+          "type": 3
+        },
+        {
+          "idx": 2,
+          "id": "50044513897",
+          "name": "Production",
+          "type": 1
+        }
+      ]
+    }
+  ]
+}
