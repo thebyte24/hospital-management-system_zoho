@@ -1,5 +1,17 @@
 {
   "defaults": {
     "project": "Racer"
+  },
+  "services": {
+    "appsail": [
+      {
+        "path": "server"
+      }
+    ],
+    "slate": [
+      {
+        "path": "client"
+      }
+    ]
   }
 }
