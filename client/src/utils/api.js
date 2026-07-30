@@ -11,7 +11,7 @@
  */
 
 const API_BASE_URL = import.meta.env.PROD 
-  ? import.meta.env.VITE_API_URL || '' // Set this in production
+  ? 'https://hospital-queue-api-50044499616.development.catalystappsail.in'
   : '/api';
 
 /**
