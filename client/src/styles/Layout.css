@@ -1,0 +1,111 @@
+/* Layout component styles */
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.user-role-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.user-name {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.btn-logout {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.footer {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+  
+  .header-left {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .main-content {
+    padding: var(--spacing-md);
+  }
+}
