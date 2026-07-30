@@ -4,9 +4,10 @@ const catalyst = require('zcatalyst-sdk-node');
 
 const app = express();
 
-// Middleware - CORS configuration (allow all origins)
+// Middleware - CORS configuration (allow ALL origins - wildcard)
+// This allows requests from ANY domain including your Slate frontend
 app.use(cors({
-  origin: '*',
+  origin: '*', // Accept ALL origins
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
