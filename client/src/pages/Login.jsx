@@ -10,18 +10,12 @@ function Login({ setUser }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if user just signed up
+  // Pre-fill email if coming from signup
   useEffect(() => {
-    if (location.state?.signupSuccess) {
-      // Auto-login the user who just signed up
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setUser(user);
-        navigate('/patient');
-      }
+    if (location.state?.signupSuccess && location.state?.email) {
+      setEmail(location.state.email);
     }
-  }, [location, setUser, navigate]);
+  }, [location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,26 +23,38 @@ function Login({ setUser }) {
     setLoading(true);
 
     try {
-      // TODO: Implement Catalyst Authentication
-      // For now, mock authentication for development
-      
-      // Mock user data
-      const mockUser = {
-        id: '123',
-        name: email.split('@')[0],
-        email: email,
-        role: email.includes('doctor') ? 'Doctor' : 
-              email.includes('admin') ? 'Admin' : 
-              'Patient'
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://hospital-queue-api-50044499616.development.catalystappsail.in'}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
+
+      // Store user data
+      const user = {
+        id: data.data.userId,
+        name: data.data.name,
+        email: data.data.email,
+        role: data.data.role.charAt(0).toUpperCase() + data.data.role.slice(1) // Capitalize role
       };
       
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
       
       // Navigate based on role
-      if (mockUser.role === 'Doctor') {
+      if (user.role === 'Doctor') {
         navigate('/doctor');
-      } else if (mockUser.role === 'Admin') {
+      } else if (user.role === 'Admin') {
         navigate('/admin');
       } else {
         navigate('/patient');
@@ -68,14 +74,18 @@ function Login({ setUser }) {
         
         {error && <div className="error-message">{error}</div>}
         
-        <div className="info-message" style={{ fontSize: '0.875rem', marginBottom: 'var(--spacing-md)' }}>
-          <strong>Local Development Mode</strong><br />
-          Use these test accounts:<br />
-          • patient@test.com - Patient Dashboard<br />
-          • doctor@test.com - Doctor Dashboard<br />
-          • admin@test.com - Admin Dashboard<br />
-          <em style={{ fontSize: '0.75rem' }}>Password: any</em>
-        </div>
+        {location.state?.signupSuccess && (
+          <div className="success-message" style={{ 
+            backgroundColor: '#d4edda', 
+            color: '#155724', 
+            padding: '12px', 
+            borderRadius: '4px', 
+            marginBottom: '16px',
+            border: '1px solid #c3e6cb'
+          }}>
+            Signup successful! Please login with your credentials.
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">

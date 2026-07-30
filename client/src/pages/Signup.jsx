@@ -42,28 +42,34 @@ function Signup() {
     setLoading(true);
 
     try {
-      // TODO: Implement Catalyst Authentication signup
-      // This should:
-      // 1. Create a Catalyst user with Patient role
-      // 2. Create a Patient record linked to the user
-      
-      // For local development, create a mock patient user and auto-login
-      const mockUser = {
-        id: 'patient_' + Date.now(),
-        name: formData.name,
-        email: formData.email,
-        role: 'Patient'
-      };
-      
-      // Store mock user
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://hospital-queue-api-50044499616.development.catalystappsail.in'}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: 'patient',
+          age: formData.age,
+          gender: formData.gender,
+          phone: formData.phone,
+          bloodGroup: formData.bloodGroup
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Signup failed');
+      }
       
       // Show success message
-      alert('Signup successful! Welcome, ' + formData.name + '!');
+      alert('Signup successful! Welcome, ' + formData.name + '! Please login with your credentials.');
       
-      // Redirect to login page with success state
-      // In production, Catalyst would handle this automatically
-      navigate('/login', { state: { signupSuccess: true } });
+      // Redirect to login page
+      navigate('/login', { state: { signupSuccess: true, email: formData.email } });
     } catch (err) {
       setError(err.message || 'Signup failed');
     } finally {
