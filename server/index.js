@@ -4,22 +4,12 @@ const catalyst = require('zcatalyst-sdk-node');
 
 const app = express();
 
-// Middleware - CORS configuration
-const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://hospital-queue-management-60080731387.catalyst.zoho.in',
-    'https://hospital-queue-management-60080731387.development.catalystserverless.com',
-    /\.catalyst\.zoho\.(in|com|eu)$/,
-    /\.catalystserverless\.com$/
-  ],
-  credentials: true,
+// Middleware - CORS configuration (allow all origins)
+app.use(cors({
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
-
-app.use(cors(corsOptions));
+}));
 app.use(express.json());
 
 // Import routes
